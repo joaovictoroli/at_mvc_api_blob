@@ -1,0 +1,43 @@
+﻿@model SocialNetwork.WebApp.Models.DetailsUserWUsersViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Details:</h4>
+    <hr />
+    <div class="container mb-2">
+        <img src="@Model.userDetail.ImageUrl" style="max-width:50px; height:auto" />
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.userDetail.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.userDetail.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @User.Identity.Name
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.userDetail.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.userDetail.ImageUrl
+        </dd>
+    </dl>
+</div>
+
+@if (Model.UserId != Model.userDetail.UserId && !Model.HasLinkAlready)
+{
+    <a asp-action="LinkUserUsers" asp-route-UserId="@Model.UserId" asp-route-UserId2="@Model.userDetail.UserId">Add link</a>
+}
+@if (Model.HasLinkAlready)
+{
+    <a asp-action="RemoveLink" asp-route-UserId="@Model.UserId" asp-route-UserId2="@Model.userDetail.UserId">Remove Link</a>
+}
+

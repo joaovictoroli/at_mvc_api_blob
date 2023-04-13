@@ -1,0 +1,139 @@
+﻿@model SocialNetwork.WebApp.Models.DetailsUserUserViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>User</h1>
+
+<div>
+    <h4>Details:</h4>
+    <hr />
+    <div class="container mb-2">
+        <img src="@Model.userDetail.ImageUrl" style="max-width:50px; height:auto" />
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.userDetail.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.userDetail.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @User.Identity.Name
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.userDetail.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.userDetail.ImageUrl
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.userDetail.UserId">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model?.userDetail.UserId">Delete</a>
+</div>
+
+<br />
+<br />
+<br />
+<h4>Friends</h4>
+<p>
+    <a asp-action="CreateRelation" asp-route-UserId="@Model.userDetail.UserId">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ImageUrl
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.userUsers != null)
+        {
+            @foreach (var item in Model.userUsers)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ImageUrl" style="max-width:50px; height:auto" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-action="DeleteRelation" asp-route-UserId="@Model.userDetail.UserId" asp-route-UserId2="@item.UserId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<br />
+
+<h4>Posts</h4>
+<p>
+    <a asp-action="Create" asp-controller="Posts">Create New Post</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                PostId
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Content
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.UserPosts != null)
+        {
+            @foreach (var item in Model.UserPosts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Comments" asp-route-id="@item.PostId">Acess</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Posts" asp-route-postId="@item.PostId">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeletePost" asp-controller="Posts" asp-route-PostId="@item.PostId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

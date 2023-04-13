@@ -1,0 +1,78 @@
+﻿@model SocialNetwork.WebApp.Models.DetailsPostWCommentsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Post</h1>
+<a asp-controller="UserUsersControllers" asp-action="Details" asp-route-Id="@Model.post.UserId">Go to User</a>
+
+<div class="mt-3">
+    <h4>Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.post.PostId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.post.PostId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.post.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.post.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.post.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.post.Content)
+        </dd>
+    </dl>
+</div>
+
+<h4>Comments</h4>
+@if (Model.HasLink || Model.UserId == Model.post.UserId)
+{
+    <p>
+        <a asp-action="Create" asp-route-id="@Model.post.PostId">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Comment
+            </th>
+            <th>
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentText)
+                </td>
+
+                @if (Model.UserId == item.UserId)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CommentId">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeleteComment" asp-route-CommentId="@item.CommentId" asp-route-PostId="@item.PostId">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-controller="Posts" asp-action="Index">Back to Posts</a>
+</div>

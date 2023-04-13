@@ -1,0 +1,63 @@
+﻿@model SocialNetwork.WebApp.Models.IndexPostViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of Posts</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Post Id
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Content
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.post)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <a asp-controller="Comments" asp-action="Details" asp-route-id="@item.PostId">Access</a>
+                </td>
+                @if (item.UserId == Model.userId)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-postId="@item.PostId">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeletePost" asp-route-PostId="@item.PostId">Delete</a>
+                    </td>
+                } else
+                {
+                    <td></td>
+                    <td></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
